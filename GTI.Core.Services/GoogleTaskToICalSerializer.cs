@@ -40,7 +40,7 @@ namespace GTI.Core.Services
                     Created = new CalDateTime(googleTaskItem.Created),
                     LastModified = new CalDateTime(googleTaskItem.Updated),
                     Summary = googleTaskItem.Title,
-                    Description = googleTaskItem.Notes,
+                    Description = googleTaskItem.Notes
                 };
 
                 string iCalStatus = getICalStatus(googleTaskItem.Status);
@@ -56,7 +56,7 @@ namespace GTI.Core.Services
                     todoItem.Completed = new CalDateTime(googleTaskItem.Completed.Value);
 
                 if (googleTaskItem.SelfLink != null)
-                    todoItem.Url = new Uri(googleTaskItem.SelfLink);
+                    todoItem.AddProperty("X-GTASKURL", googleTaskItem.SelfLink);
 
                 if (googleTaskItem.Due != default)
                     todoItem.Due = new CalDateTime(googleTaskItem.Due);
