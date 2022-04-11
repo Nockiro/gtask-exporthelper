@@ -58,6 +58,9 @@ namespace GTI.Core.Services
                 if (googleTaskItem.SelfLink != null)
                     todoItem.Url = new Uri(googleTaskItem.SelfLink);
 
+                if (googleTaskItem.Due != default)
+                    todoItem.Due = new CalDateTime(googleTaskItem.Due);
+
                 events.Add(todoItem);
 
                 _taskTodoMap.Add(googleTaskItem, todoItem);
