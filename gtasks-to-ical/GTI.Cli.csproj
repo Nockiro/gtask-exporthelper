@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>GTI.Cli</RootNamespace>
+    <AssemblyName>GTI.Cli</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GTI.Core.Contracts\GTI.Core.Contracts.csproj" />
+    <ProjectReference Include="..\GTI.Core.Services\GTI.Core.Services.csproj" />
+  </ItemGroup>
+
+</Project>
