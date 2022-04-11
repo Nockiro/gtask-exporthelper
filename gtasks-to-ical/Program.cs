@@ -1,4 +1,6 @@
-﻿using GTI.Core.Contracts;
+﻿using CommandLine;
+using GTI.Cli.Model;
+using GTI.Core.Contracts;
 using GTI.Core.Contracts.Model;
 using GTI.Core.Services;
 using System;
@@ -11,8 +13,16 @@ namespace GTI.Cli
     {
         static void Main(string[] args)
         {
-            //IGoogleTaskDataProvider taskProvider = new GoogleTaskMockDataProvider();
-            IGoogleTaskDataProvider taskProvider = new GoogleTaskJsonDataProvider("tasks.json");
+            Parser.Default.ParseArguments<CommandLineOptions>(args)
+                .WithParsed(o =>
+                {
+                    writeFromJsonInput(o.JsonInputPath);
+                });
+        }
+
+        private static void writeFromJsonInput(string jsonInputPath)
+        {
+            IGoogleTaskDataProvider taskProvider = new GoogleTaskJsonDataProvider(jsonInputPath);
             IGoogleTaskToICalSerializer taskSerializer = new GoogleTaskToICalSerializer();
 
             List<GoogleTaskList> googleTaskLists = taskProvider.GetTaskLists();
