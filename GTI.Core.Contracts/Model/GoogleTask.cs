@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace GTI.Core.Contracts.Model
 {
+    /// <summary>
+    /// Represents one task from a Google Tasks list.
+    /// </summary>
     public class GoogleTask
     {
         [JsonPropertyName("notes")]

@@ -6,9 +6,6 @@ using Ical.Net.DataTypes;
 using Ical.Net.Serialization;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GTI.Core.Services
 {
@@ -16,6 +13,7 @@ namespace GTI.Core.Services
     {
         private Dictionary<GoogleTask, Todo> _taskTodoMap;
 
+        /// <inheritdoc/>
         public string Serialize(GoogleTaskList taskList)
         {
             _taskTodoMap = new();

@@ -4,6 +4,9 @@ using System.Text.Json.Serialization;
 
 namespace GTI.Core.Contracts.Model
 {
+    /// <summary>
+    /// Represents one list of Google Tasks.
+    /// </summary>
     public class GoogleTaskList
     {
         [JsonPropertyName("id")]

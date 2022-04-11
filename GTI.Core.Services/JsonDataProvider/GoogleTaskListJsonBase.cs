@@ -1,10 +1,10 @@
-﻿using System;
+﻿using GTI.Core.Contracts.Model;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace GTI.Core.Contracts.Model
+namespace GTI.Core.Services
 {
-    public class GoogleTaskListJsonBase
+    internal class GoogleTaskListJsonBase
     {
         [JsonPropertyName("items")]
         public List<GoogleTaskList> Items { get; set; } = new List<GoogleTaskList>();
