@@ -5,7 +5,7 @@ namespace GTI.Cli.Model
 {
     internal class CommandLineOptions
     {
-        [Option(shortName: 'j', longName: "jsonInput", Required = true, HelpText = "Path to Google Task JSON export file", Default = "tasks.json")]
+        [Option(shortName: 'j', longName: "jsonInput", Required = true, HelpText = "Path to Google Task JSON export file")]
         public string JsonInputPath { get; set; }
 
         [Option(shortName: 'm', 
@@ -16,7 +16,7 @@ namespace GTI.Cli.Model
             Default = "")]
         public ICalOutputMode OutputMode { get; set; }
 
-        [Option(shortName: 'o', longName: "outputPath", HelpText = "Path to the folder in which the files generated are to be saved.\nOutputMode: File", Default = "")]
+        [Option(shortName: 'o', longName: "outputPath", Required = true, HelpText = "Path to the folder in which the files generated are to be saved.\nOutputMode: File")]
         public string OutputPath { get; set; }
 
         [Option(longName: "calDavUri", 

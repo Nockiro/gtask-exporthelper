@@ -6,7 +6,23 @@
     <RootNamespace>GTI.Cli</RootNamespace>
     <AssemblyName>GTI.Cli</AssemblyName>
     <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+    <Authors>Robin Freund</Authors>
+    <Description>Simple tool to export Google Tasks lists to iCal-compatible systems.</Description>
+    <Copyright>Robin Freund</Copyright>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/Nockiro/GTaskExportHelper.git</RepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageProjectUrl>https://github.com/Nockiro/GTaskExportHelper</PackageProjectUrl>
+    <Product>GTask Export Helper CLI</Product>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.8.0" />
