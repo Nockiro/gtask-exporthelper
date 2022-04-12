@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace GTI.Core.Services
@@ -12,11 +14,25 @@ namespace GTI.Core.Services
     {
         private readonly IGoogleTaskToICalSerializer _taskSerializer;
         private readonly GoogleTaskCalDAVWriteOptions _options;
+        private static readonly HttpClient httpClient = new();
 
         public GoogleTaskCalDAVWriter(IGoogleTaskToICalSerializer taskSerializer, GoogleTaskCalDAVWriteOptions options)
         {
             this._taskSerializer = taskSerializer;
             this._options = options;
+
+            initHttpClient();
+        }
+
+        private void initHttpClient()
+        {
+            httpClient.BaseAddress = _options.BaseUri;
+
+            if (!httpClient.BaseAddress.AbsoluteUri.EndsWith('/'))
+                httpClient.BaseAddress = new Uri(_options.BaseUri.ToString() + '/');
+
+            string authBasic = getBasicAuthString(_options.AuthUser, _options.AuthPass);
+            httpClient.DefaultRequestHeaders.Add("Authorization", authBasic);
         }
 
         public void Write(List<GoogleTaskList> listsToWrite)
@@ -100,32 +116,20 @@ namespace GTI.Core.Services
 
         private HttpStatusCode sendDAVRequest(string requestPath, string method, string body)
         {
-            string authBasic = getBasicAuthString(_options.AuthUser, _options.AuthPass);
-
-            var createRequest = (HttpWebRequest)WebRequest.Create(string.Join('/', _options.BaseUri.ToString().Trim('/'), requestPath));
-            createRequest.Method = method;
-            createRequest.Headers["Authorization"] = authBasic;
-
-            if (createRequest.Method == "MKCOL")
-                createRequest.ContentType = "application/xml";
+            HttpRequestMessage httpRequestMessage = new(new HttpMethod(method), requestPath);
 
             if (body != null)
             {
-                using var streamWriter = new StreamWriter(createRequest.GetRequestStream());
-                streamWriter.Write(body);
+                httpRequestMessage.Content = new StringContent(body);
+
+                if (method == "MKCOL")
+                {
+                    httpRequestMessage.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                }
             }
 
-            HttpWebResponse createResponse;
-            try
-            {
-                createResponse = (HttpWebResponse)createRequest.GetResponse();
-            }
-            catch (WebException e)
-            {
-                createResponse = (HttpWebResponse)e.Response;
-            }
-
-            return createResponse.StatusCode;
+            HttpResponseMessage response = httpClient.Send(httpRequestMessage);
+            return response.StatusCode;
         }
 
         private string getBasicAuthString(string user, string pass)
