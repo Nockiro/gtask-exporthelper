@@ -4,7 +4,7 @@
 
 In short, this utility can be used to take an export of Googles Tasks lists (via [Google Takeout as JSON](https://takeout.google.com/settings/takeout)) and use them elsewhere through the iCalendar file format.  
 
-At the moment, there are two possibile output possibilities:
+At the moment, there are two possible output possibilities:
 
 - Save tasks lists as separate files in the iCalendar file format
 - Save tasks lists directly via CalDAV to an already existing CalDAV server (e.g. NextCloud)

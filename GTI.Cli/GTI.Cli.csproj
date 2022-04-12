@@ -10,7 +10,7 @@
     <Description>Simple tool to export Google Tasks lists to iCal-compatible systems.</Description>
     <Copyright>Robin Freund</Copyright>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/Nockiro/GTaskExportHelper.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/Nockiro/gtask-exporthelper.git</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageProjectUrl>https://github.com/Nockiro/gtask-exporthelper</PackageProjectUrl>
     <Product>GTask Export Helper CLI</Product>
