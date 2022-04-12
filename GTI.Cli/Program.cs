@@ -16,7 +16,6 @@ namespace GTI.Cli
             IGoogleTaskDataProvider taskProvider = null;
             IGoogleTaskToICalSerializer taskSerializer = new GoogleTaskToICalSerializer();
 
-            Console.WriteLine("Parsing arguments..");
             Parser.Default.ParseArguments<CommandLineOptions>(args)
                 .WithParsed(o =>
                 {
