@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32126.315
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GTI.Cli", "gtasks-to-ical\GTI.Cli.csproj", "{D46722A5-F27B-4D1F-AA59-9962FDA013AC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GTI.Cli", "GTI.Cli\GTI.Cli.csproj", "{D46722A5-F27B-4D1F-AA59-9962FDA013AC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GTI.Core.Contracts", "GTI.Core.Contracts\GTI.Core.Contracts.csproj", "{BF3FD522-16CE-4F4B-9D83-DA631C4B1508}"
 EndProject
