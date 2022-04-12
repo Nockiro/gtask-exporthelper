@@ -36,7 +36,7 @@ GTI.Cli.exe -j tasks.json --outputMode CalDAV --calDavUri https://yournextcloud.
 ```
   -j, --jsonInput     [Required.] Path to Google Task JSON export file
 
-  -m, --outputMode    Mode that the output generation should follow.
+  -m, --outputMode    (Default: File) Mode that the output generation should follow.
                       Must be one of the following: File, CalDAV
                       Note: CalDAV mode currently only works with adding new calendars.
 

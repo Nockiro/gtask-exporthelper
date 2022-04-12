@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace GTI.Cli
 {
-    internal class Program
+    internal static class Program
     {
         private static void Main(string[] args)
         {
@@ -16,7 +16,17 @@ namespace GTI.Cli
             IGoogleTaskDataProvider taskProvider = null;
             IGoogleTaskToICalSerializer taskSerializer = new GoogleTaskToICalSerializer();
 
-            Parser.Default.ParseArguments<CommandLineOptions>(args)
+            Parser commandLineParser = new(with =>
+            {
+                with.CaseInsensitiveEnumValues = true;
+                with.AutoHelp = true;
+                with.AutoVersion = true;
+                with.EnableDashDash = true;
+
+                with.HelpWriter = Console.Error;
+            });
+
+            commandLineParser.ParseArguments<CommandLineOptions>(args)
                 .WithParsed(o =>
                 {
                     taskProvider = new GoogleTaskJsonDataProvider(o.JsonInputPath);
