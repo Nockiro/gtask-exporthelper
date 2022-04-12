@@ -12,7 +12,7 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/Nockiro/GTaskExportHelper.git</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageProjectUrl>https://github.com/Nockiro/GTaskExportHelper</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/Nockiro/gtask-exporthelper</PackageProjectUrl>
     <Product>GTask Export Helper CLI</Product>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
