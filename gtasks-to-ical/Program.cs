@@ -5,31 +5,52 @@ using GTI.Core.Contracts.Model;
 using GTI.Core.Services;
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace GTI.Cli
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
+            IGoogleTaskWriter taskWriter = null;
+            IGoogleTaskDataProvider taskProvider = null;
+            IGoogleTaskToICalSerializer taskSerializer = new GoogleTaskToICalSerializer();
+
+            Console.WriteLine("Parsing arguments..");
             Parser.Default.ParseArguments<CommandLineOptions>(args)
                 .WithParsed(o =>
                 {
-                    writeFromJsonInput(o.JsonInputPath);
+                    taskProvider = new GoogleTaskJsonDataProvider(o.JsonInputPath);
+
+                    switch (o.OutputMode)
+                    {
+                        case ICalOutputMode.File:
+                            taskWriter = new GoogleTaskFileWriter(taskSerializer, new GoogleTaskFileWriteOptions()
+                            {
+                                OutputDirectory = o.OutputPath
+                            });
+                            break;
+
+                        case ICalOutputMode.CalDAV:
+                            taskWriter = new GoogleTaskCalDAVWriter(taskSerializer, new GoogleTaskCalDAVWriteOptions()
+                            {
+                                BaseUri = o.CalDavUri,
+                                AuthUser = o.CalDavUser,
+                                AuthPass = o.CalDavPass
+                            });
+                            break;
+                    }
                 });
-        }
 
-        private static void writeFromJsonInput(string jsonInputPath)
-        {
-            IGoogleTaskDataProvider taskProvider = new GoogleTaskJsonDataProvider(jsonInputPath);
-            IGoogleTaskToICalSerializer taskSerializer = new GoogleTaskToICalSerializer();
-
-            List<GoogleTaskList> googleTaskLists = taskProvider.GetTaskLists();
-
-            foreach (GoogleTaskList list in googleTaskLists)
+            if (taskWriter != null)
             {
-                File.WriteAllText($"{list.Title.ToLower()}.ics", taskSerializer.Serialize(list));
+                Console.WriteLine("Retrieving task list.." + Environment.NewLine);
+                List<GoogleTaskList> googleTaskLists = taskProvider.GetTaskLists();
+
+                Console.WriteLine("Writing output.." + Environment.NewLine);
+                taskWriter.Write(googleTaskLists);
+
+                Console.WriteLine("Export done.");
             }
         }
     }

@@ -12,24 +12,44 @@ namespace GTI.Core.Services
     public class GoogleTaskToICalSerializer : IGoogleTaskToICalSerializer
     {
         private Dictionary<GoogleTask, Todo> _taskTodoMap;
+        private readonly CalendarSerializer _serializer = new();
 
-        /// <inheritdoc/>
         public string Serialize(GoogleTaskList taskList)
         {
             _taskTodoMap = new();
 
+            List<Todo> events = getItems(taskList);
+            addParentRelations(taskList);
+
             var calendar = new Calendar();
             calendar.AddTimeZone(TimeZoneInfo.Utc);
-
-            List<Todo> events = getMainItems(taskList);
-            addParentRelations(taskList);
             calendar.Todos.AddRange(events);
 
-            var serializer = new CalendarSerializer();
-            return serializer.SerializeToString(calendar);
+            return _serializer.SerializeToString(calendar);
         }
 
-        private List<Todo> getMainItems(GoogleTaskList taskList)
+        public Dictionary<string, string> SerializeMany(GoogleTaskList taskList)
+        {
+            _taskTodoMap = new();
+
+            List<Todo> events = getItems(taskList);
+            addParentRelations(taskList);
+
+            Dictionary<string, string> calendarEntries = new();
+
+            foreach (var item in events)
+            {
+                var calendar = new Calendar();
+                calendar.AddTimeZone(TimeZoneInfo.Utc);
+                calendar.Todos.Add(item);
+
+                calendarEntries.Add(item.Uid, _serializer.SerializeToString(calendar));
+            }
+
+            return calendarEntries;
+        }
+
+        private List<Todo> getItems(GoogleTaskList taskList)
         {
             List<Todo> events = new();
 
