@@ -96,6 +96,7 @@ namespace GTI.Core.Services
             Console.WriteLine($"Uploading list '{list.Title}' with {list.Items.Count} items..");
 
             Dictionary<string, string> items = _taskSerializer.SerializeMany(list);
+            string listTitle = getUriTitleFromDisplayTitle(list.Title);
 
             // calendar items have to be uploaded one at a time
             int counter = 0;
@@ -103,8 +104,11 @@ namespace GTI.Core.Services
             {
                 Console.Write($"{counter}.. ");
 
-                string listTitle = getUriTitleFromDisplayTitle(list.Title);
-                sendDAVRequest(listTitle, "PUT", item.Value);
+                HttpStatusCode davResponseStatusCode = sendDAVRequest($"{listTitle}/{item.Key}.ics", "PUT", item.Value);
+                if (davResponseStatusCode != HttpStatusCode.Created)
+                {
+                    Console.Write($"{Enum.GetName(typeof(HttpStatusCode), davResponseStatusCode)}! ");
+                }
 
                 counter++;
             }
@@ -122,9 +126,14 @@ namespace GTI.Core.Services
             {
                 httpRequestMessage.Content = new StringContent(body);
 
-                if (method == "MKCOL")
+                switch (method)
                 {
-                    httpRequestMessage.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                    case "MKCOL":
+                        httpRequestMessage.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                        break;
+                    case "PUT":
+                        httpRequestMessage.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("text/calendar");
+                        break;
                 }
             }
 
