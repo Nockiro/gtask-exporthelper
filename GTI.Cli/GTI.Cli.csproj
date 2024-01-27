@@ -15,6 +15,7 @@
     <PackageProjectUrl>https://github.com/Nockiro/gtask-exporthelper</PackageProjectUrl>
     <Product>GTask Export Helper CLI</Product>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
