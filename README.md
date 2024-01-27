@@ -21,15 +21,20 @@ You set the location of the input file via `-j` and then either
 
 ### Examples
 
-* To import a json file named "tasks.json" and save all lists to the folder "D:\tasks"
+* Import a json file named "tasks.json" and save all lists to the folder "D:\tasks"
 ```bat
 GTI.Cli.exe -j tasks.json --outputMode File --outputPath "D:\tasks"
 ```
 
-* To import a json file named "tasks.json" and save all lists via CalDAV on `https://yournextcloud.de/remote.php/dav/calendars/youruser`
-```
-GTI.Cli.exe -j tasks.json --outputMode CalDAV --calDavUri https://yournextcloud.de/remote.php/dav/calendars/youruser --calDavUser youruser --calDavPass G00dAppP@ssw0rd
-``` 
+* Import a json file named "tasks.json" and save all lists via CalDAV on `https://yournextcloud.de/remote.php/dav/calendars/youruser`
+  * *Example for NextCloud*
+  ```
+  GTI.Cli.exe -j tasks.json --outputMode CalDAV --calDavUri https://yournextcloud.de/remote.php/dav/calendars/youruser --calDavUser youruser --calDavPass G00dAppP@ssw0rd
+  ``` 
+  * *Example for Baikal*
+  ```
+  GTI.Cli.exe -j tasks.json --outputMode CalDAV --calDavUri https://baikal.yourserver.de/dav.php/calendars/youruser --calDavUser youruser --calDavPass G00dAppP@ssw0rd
+  ``` 
 
 ### Complete parameter list
 
