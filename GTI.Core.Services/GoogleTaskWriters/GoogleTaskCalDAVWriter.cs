@@ -82,7 +82,13 @@ namespace GTI.Core.Services
                                         </x0:set>
                                     </x0:mkcol>";
 
-                sendDAVRequest(listTitle, "MKCOL", createBody);
+                HttpStatusCode createStatus = sendDAVRequest(listTitle, "MKCOL", createBody);
+
+                if (createStatus == HttpStatusCode.NotFound)
+                {
+                    throw new Exception(
+                        $"Something went wrong, the server reports it couldn't find the given CalDAV endpoint (HTTP {createStatus})");
+                }
 
                 Console.WriteLine($"Done.");
                 return;
